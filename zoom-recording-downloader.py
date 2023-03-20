@@ -11,6 +11,9 @@
 # Website:      https://github.com/ricardorodrigues-ca/zoom-recording-downloader
 # Forked from:  https://gist.github.com/danaspiegel/c33004e52ffacb60c24215abf8301680
 
+# Changelog:
+# 19-Mar-2023: Change folder name to same format as filename - YYYY-MM-DD HH:MM TZ Recording name
+
 # Import TQDM progress bar library
 from tqdm import tqdm
 # Import app environment variables
@@ -103,9 +106,10 @@ def format_filename(recording, file_type, file_extension, recording_type, record
     uuid = recording['uuid']
     topic = recording['topic'].replace('/', '&')
     rec_type = recording_type.replace("_", " ").title()
-    meeting_time = parse(recording['start_time']).strftime('%Y.%m.%d - %I.%M %p UTC')
+    meeting_time = parse(recording['start_time']).strftime('%Y.%m.%d - %H.%M %Z')
     return '{} - {} - {}.{}'.format(
-        meeting_time, topic+" - "+rec_type, recording_id, file_extension.lower()),'{} - {}'.format(topic, meeting_time)
+        meeting_time, topic+" - "+rec_type, recording_id, file_extension.lower()),'{} - {}'.format(meeting_time, topic)        
+        
 
 
 def get_downloads(recording):
